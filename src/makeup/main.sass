@@ -1,0 +1,74 @@
+$w: 100px
+$h: 100px
+
+$foreground: black
+$background: #fff0e5
+$tiny: #2dff00
+
+body
+  background-color: $background
+  text-decoration: none
+
+.m, .a, .s, .h
+  width: $w * 5
+  height: $h * 5
+  margin: auto
+
+.row
+  display: flex
+  height: $h
+
+a
+  display: inline-block
+  vertical-align: top
+  overflow: hidden
+  text-decoration: none
+  position: relative
+
+  img
+    transition: filter 0.3s ease-in
+    -webkit-transition: -webkit-filter 0.3s ease-in
+
+  &:hover
+    text-decoration: none
+    
+    p
+      bottom: 0
+
+    img
+      -webkit-filter: contrast(200%)
+      filter: contrast(200%)
+
+  p
+    position: absolute
+    bottom: $h * -3
+    transition: all 0.3s ease-in
+    color: $foreground
+    background-color: rgba(250, 255, 250, 0.7)
+    font-size: 18px
+    margin: 0
+
+.tiny
+  width: $w
+  height: $h
+
+.huge
+  width: $w * 2
+  height: $h * 2
+
+.tall
+  width: $w
+  height: $h * 2
+
+.wide
+  width: $w * 2
+  height: $h
+
+.shift-1
+  margin-left: $w
+
+.shift-2
+  margin-left: $w * 2
+
+.shift-3
+  margin-left: $w * 3

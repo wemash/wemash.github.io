@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+. bin/_common
+set_foreground_and_background $BLUE $WHITE
+
+bin/serve &
+SERVER="$!"
+
+function on_death {
+  kill "$SERVER"
+  echo "\nbleggggh..."
+  reset_colors
+  exit
+}
+
+trap on_death SIGINT SIGTERM
+
+CHECKSUM=""
+while true ; do
+  CHECKSUM2=$(find src -type f -exec md5 {} \;)
+  if [[ "$CHECKSUM" != "$CHECKSUM2" ]] ; then
+    CHECKSUM="$CHECKSUM2"
+    bin/build 2>/dev/null
+  fi
+  sleep 1
+done

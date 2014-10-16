@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+. bin/_common
+set_foreground_and_background $YELLOW $BLACK
+gem install haml sass heel
+reset_colors

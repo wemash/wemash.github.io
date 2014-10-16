@@ -1,0 +1,46 @@
+#!/usr/bin/env zsh
+
+BLACK=0
+RED=1
+GREEN=2
+YELLOW=3
+BLUE=4
+MAGENTA=5
+CYAN=6
+WHITE=7
+
+# Set the foreground and background color
+# @param $1 The foreground color
+# @param $2 The background color
+function set_foreground_and_background {
+  echo "setaf $1\nsetab $2" | tput -S
+  echo
+}
+
+# Reset the current colors
+function reset_colors {
+  tput sgr0
+}
+
+# Tell me something and then die
+# @param $1 The thing you want to say
+function bail {
+  echo "$1"
+  exit
+}
+
+# Ask me something, and put the answer somewhere
+# @param $1 The thing you want to ask
+# @param $2 The name of the place I should put the answer
+function ask {
+  echo -n "$1 "
+  read "$2"
+}
+
+# Execute a function only if the script is interacting with me
+# @param $1 The function you want to execute
+function if_interactive {
+  if [[ -t 0 ]] ; then
+    $1
+  fi
+}

@@ -1,0 +1,65 @@
+#!/usr/bin/env zsh
+. bin/_common
+
+# Crop an image to a specific size, and blow it up to fill that size if it's
+# too small. The image will be saved to $2 immediately. The cropping is done
+# from the center of the image, so ensure that the center is the most
+# interesting part.
+#
+# @param $1 The image to resize
+# @param $2 Where to place the cropped image
+# @param $3 The width to crop
+# @param $4 The height to crop
+function crop {
+  convert "$1" -resize "$3x$4<^" -gravity center -extent "$3x$4" "$2"
+}
+
+# Open my default editor
+function open_editor {
+  pushd "$ROOT"
+  eval "$EDITOR post.md" &
+  popd
+}
+
+set_foreground_and_background $MAGENTA $WHITE
+
+ask "What is the title?" TITLE
+SLUG=$(sed -e 's/[^[:alnum:]]/-/g' <<< "$TITLE" | tr -s "-" | tr "A-Z" "a-z")
+[ -z "$SLUG" ] && bail "No title? No post"
+
+ask "What does the poster look like?" POSTER
+[ ! -e "$POSTER" ] && bail "No poster? No post"
+
+ROOT="src/$(date +%Y/%m/%d)/$SLUG"
+PROOT="$ROOT/posters"
+MROOT="$ROOT/meta"
+TROOT="$MROOT/title"
+
+mkdir -p "$ROOT"
+mkdir -p "$PROOT"
+mkdir -p "$MROOT"
+mkdir -p "$TROOT"
+
+TINY="$PROOT/tiny.jpg"
+HUGE="$PROOT/huge.jpg"
+WIDE="$PROOT/wide.jpg"
+TALL="$PROOT/tall.jpg"
+
+[ ! -e "$TINY" ] && crop "$POSTER" "$TINY" 100 100 
+[ ! -e "$HUGE" ] && crop "$POSTER" "$HUGE" 200 200
+[ ! -e "$WIDE" ] && crop "$POSTER" "$WIDE" 200 100
+[ ! -e "$TALL" ] && crop "$POSTER" "$TALL" 100 200
+
+INDEX="$ROOT/index.haml"
+POST="$ROOT/post.md"
+
+[ ! -e "$INDEX" ] && cp cloning-tank/post.haml "$INDEX"
+[ ! -e "$POST" ] && echo "#$TITLE" > "$POST"
+
+[ ! -e "$TROOT/full" ] && echo "$TITLE" > "$TROOT/full"
+[ ! -e "$TROOT/tiny" ] && echo "${TITLE:0:10}..." > "$TROOT/tiny"
+
+touch "$ROOT/_post"
+
+if_interactive open_editor
+reset_colors

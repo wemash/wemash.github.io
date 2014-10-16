@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+. bin/_common
+set_foreground_and_background $RED $YELLOW
+[ -z "$(echo out/*(N))" ] && echo "Nothing to clean!" && exit
+echo "REMOVING..."
+rm -vr out/*
+reset_colors

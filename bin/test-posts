@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+. bin/_common
+
+set_foreground_and_background $WHITE $YELLOW
+ask "How many times should I try to make a post?" COUNT
+
+TROOT="$PWD/test"
+IROOT="$TROOT/images"
+
+for i in `seq 1 "$COUNT"` ; do
+  TITLE="$(shuf -n 1 $TROOT/riker.txt)"
+  POSTER="$(ls -d -1 $IROOT/* | shuf -n 1)"
+  echo "$TITLE\n$POSTER" | bin/post >/dev/null
+done

@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+. bin/_common
+
+function on_death {
+  reset_colors
+  popd >/dev/null
+}
+
+trap on_death EXIT
+set_foreground_and_background $WHITE $CYAN
+pushd out >/dev/null
+heel

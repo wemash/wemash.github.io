@@ -1,0 +1,42 @@
+#!/usr/bin/env zsh
+. bin/_common
+set_foreground_and_background $WHITE $BLUE
+
+POSTS=()
+for POST in $(find src -regex ".*/_post"); do
+  POSTS+=("/${${POST#*/}%/_post}/")
+done
+printf "%s\n" "${POSTS[@]}" > src/posts
+
+for HAML in $(find src -name "*.haml"); do
+  HTML="out/${${HAML#*/}%.haml}.html"
+  echo "building $HAML => $HTML"
+  mkdir -p $(dirname "$HTML") > /dev/null
+  RUBYLIB=. haml --trace -r helpers/all.rb "$HAML" "$HTML" 
+done
+
+for SASS in $(find src -name "*.sass"); do
+  CSS="out/${${SASS#*/}%.sass}.css"
+  echo "building $SASS => $CSS"
+  mkdir -p $(dirname "$CSS") > /dev/null
+  sass --sourcemap=none "$SASS" "$CSS" > /dev/null
+done
+
+for INPUT in $(find src -name "*.css"); do
+  OUTPUT="out/${INPUT#*/}"
+  echo "copying $INPUT => $OUTPUT"
+  mkdir -p $(dirname "$OUTPUT") > /dev/null
+  cp "$INPUT" "$OUTPUT" > /dev/null
+done
+
+for INPUT in $(find src -type f | egrep '\.(jpg|jpeg|gif|png)$'); do
+  OUTPUT="out/${INPUT#*/}"
+  echo "copying $INPUT => $OUTPUT"
+  mkdir -p $(dirname "$OUTPUT") > /dev/null
+  cp "$INPUT" "$OUTPUT" > /dev/null
+done
+
+cp src/CNAME out/CNAME
+echo "copying CNAME"
+
+reset_colors

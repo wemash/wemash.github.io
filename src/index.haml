@@ -1,0 +1,11 @@
+- glyphs :m, :a, :s, :h
+!!! 5
+%html
+  %head
+    %link{rel: "stylesheet", href: "/makeup/main.css"}
+    %script{src: "//use.typekit.net/rzk0doz.js"}
+    %script
+      try{Typekit.load();}catch(e){}
+  %body
+    - while posts_remaining?
+      = render next_glyph
