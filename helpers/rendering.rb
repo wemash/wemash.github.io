@@ -16,6 +16,7 @@ def tile size, options = {}
   locals[:post] = post
   locals[:size] = size
   locals[:classes] = [size]
+  locals[:classes] << "tile"
   locals[:classes] << "shift-#{options[:shift]}" if options[:shift]
   locals[:meta] = Meta.for(post)
   renderer_for("cloning-tank/tile.haml").render Object.new, locals

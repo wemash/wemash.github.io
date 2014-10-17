@@ -7,7 +7,13 @@
     %script{src: "//use.typekit.net/rzk0doz.js"}
     %script
       try{Typekit.load();}catch(e){}
+    %script
+      SETTINGS = {}
+      SETTINGS.QUICKLOOK = false
+    %script{src: "/moving-parts/analysis.js"}
+    %script{src: "/moving-parts/quicklook.js"}
   %body
+    #cover
     - unless posts_remaining?
       #construction
         %link{rel: "stylesheet", href: "/makeup/construction.css"}
