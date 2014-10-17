@@ -3,9 +3,24 @@
 %html
   %head
     %link{rel: "stylesheet", href: "/makeup/main.css"}
+    %script{src: "//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"}
     %script{src: "//use.typekit.net/rzk0doz.js"}
     %script
       try{Typekit.load();}catch(e){}
   %body
+    - unless posts_remaining?
+      #construction
+        %link{rel: "stylesheet", href: "/makeup/construction.css"}
+        %script{src: "moving-parts/barrier_fountain.js"}
+        %script
+          :plain
+            $(function() {
+              var barrier = $("#barrier"),
+                  emitter = Emitter(barrier, 100);
+              barrier.on("mouseenter", emitter.start);
+              barrier.on("mouseleave", emitter.pause);
+            });
+        %img{id: "barrier", src: "barrier.gif"}
+        %p mash.is? More like mash.willbe
     - while posts_remaining?
       = render next_glyph

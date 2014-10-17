@@ -1,2 +1,2 @@
 #!/usr/bin/env zsh
-git subtree push --prefix out origin master
+git subtree push --squash --prefix out origin master 
