@@ -21,6 +21,9 @@
               barrier.on("mouseleave", emitter.pause);
             });
         %img{id: "barrier", src: "barrier.gif"}
+        #tooltip
+          Want to talk? Send an email to
+          %a{href: "mailto:hi@mash.is"} hi@mash.is
         %p mash.is? More like mash.willbe
     - while posts_remaining?
       = render next_glyph

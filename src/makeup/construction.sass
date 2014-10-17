@@ -1,3 +1,5 @@
+$tooltip-bg: white
+
 #construction
   position: absolute
   top: 0
@@ -28,3 +30,49 @@
     margin: 0
     padding: 0
     top: calc(100% - 24px)
+
+  @-webkit-keyframes fade-in
+    from
+      opacity: 0
+    to
+      opacity: 1
+
+  @keyframes fade-in
+    from
+      opacity: 0
+    to
+      opacity: 1
+
+  #tooltip,
+  #tooltip:before
+    position: absolute
+    display: block
+    background-color: $tooltip-bg
+
+  #tooltip
+    font-size: 12px
+    left: calc(50% + 40px)
+    width: 130px
+    padding: 10px
+    border: 1px solid black
+    box-shadow: 2px 2px 0 black
+    top: calc(50% - 24px)
+    opacity: 0
+
+    -webkit-animation: fade-in 1s
+    animation: fade-in 1s
+    -webkit-animation-delay: 3s
+    animation-delay: 3s
+    -webkit-animation-fill-mode: forwards
+    animation-fill-mode: forwards
+
+    &:before
+      content: " "
+      width: 10px
+      height: 10px
+      left: -5px
+      top: calc(50% - 7px)
+      border: 1px solid black
+      transform: rotate(45deg)
+      border-top: none
+      border-right: none
