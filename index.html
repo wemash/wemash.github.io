@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='/makeup/main.css' rel='stylesheet'>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+    <script src='//use.typekit.net/rzk0doz.js'></script>
+    <script>
+      try{Typekit.load();}catch(e){}
+    </script>
+    <script>
+      SETTINGS = {}
+      SETTINGS.QUICKLOOK = false
+    </script>
+    <script src='/moving-parts/analysis.js'></script>
+    <script src='/moving-parts/quicklook.js'></script>
+  </head>
+  <body>
+    <div id='cover'></div>
+    <div id='construction'>
+      <link href='/makeup/construction.css' rel='stylesheet'>
+      <script src='moving-parts/barrier_fountain.js'></script>
+      <script>
+        $(function() {
+          var barrier = $("#barrier"),
+              emitter = Emitter(barrier, 100);
+          barrier.on("mouseenter", emitter.start);
+          barrier.on("mouseleave", emitter.pause);
+        });
+      </script>
+      <img id='barrier' src='barrier.gif'>
+      <div id='tooltip'>
+        Want to talk? Send an email to
+        <a href='mailto:hi@mash.is'>hi@mash.is</a>
+      </div>
+      <p>mash.is? More like mash.willbe</p>
+    </div>
+  </body>
+</html>
