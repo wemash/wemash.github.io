@@ -10,7 +10,7 @@ $(function() {
   var barrier = $("#barrier");
   function onBarrierTouched() {
     ga("send", "event", "interaction", "touched-barrier", "whoo!");
-    barrier.off(onBarrierTouched);
+    barrier.off("mouseenter", onBarrierTouched);
   }
   barrier.on("mouseenter", onBarrierTouched); 
 });
