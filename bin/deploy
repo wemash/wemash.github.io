@@ -1,2 +1,18 @@
 #!/usr/bin/env zsh
+. bin/_common
+
+set_foreground_and_background $BLACK $YELLOW
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+git stash save -u
+git branch -D SPOOL 2>/dev/null
+git checkout -b SPOOL
+bin/build
+rm .gitignore
+git add out
+git commit --author="BUILDBOT <buildbot@mash.is>" -n -m "NEW VERSION"
 git subtree push --squash --prefix out origin master 
+git reset --hard HEAD
+git checkout "$BRANCH"
+git stash pop
+git branch -D SPOOL
+reset_colors

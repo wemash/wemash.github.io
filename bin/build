@@ -39,4 +39,7 @@ done
 cp src/CNAME out/CNAME
 echo "copying CNAME"
 
+touch out/.nojekyll
+echo "Ensuring Jekyll won't try to munge the site"
+
 reset_colors
